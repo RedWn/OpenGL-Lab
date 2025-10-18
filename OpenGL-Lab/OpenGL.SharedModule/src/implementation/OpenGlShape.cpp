@@ -16,7 +16,7 @@ OpenGlShape::OpenGlShape()
 {
 }
 
-OpenGlShape::OpenGlShape(const vector<glm::vec3>& vertices, GLenum drawing_mode)
+OpenGlShape::OpenGlShape(const vector<glm::vec3> &vertices, GLenum drawing_mode)
 	: number_of_vertices_(vertices.size()), drawing_mode_(drawing_mode)
 {
 	glGenVertexArrays(1, &VAO_);
@@ -24,13 +24,13 @@ OpenGlShape::OpenGlShape(const vector<glm::vec3>& vertices, GLenum drawing_mode)
 	glBindVertexArray(VAO_);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO_);
 	glBufferData(GL_ARRAY_BUFFER, number_of_vertices_ * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 }
 
-vector<glm::vec3> convert_floats_to_vec3(const vector<float>& vertices);
+vector<glm::vec3> convert_floats_to_vec3(const vector<float> &vertices);
 
-OpenGlShape::OpenGlShape(const vector<float>& vertices, GLenum drawing_mode)
+OpenGlShape::OpenGlShape(const vector<float> &vertices, GLenum drawing_mode)
 	: OpenGlShape(convert_floats_to_vec3(vertices), drawing_mode)
 {
 }
@@ -51,9 +51,9 @@ struct Vertex
 	glm::vec2 texture_coords;
 };
 
-OpenGlShapeWithTexture::OpenGlShapeWithTexture(const vector<glm::vec3>& positions, GLenum mode,
-                                       const char* texture_path, const vector<glm::vec2>& texture_coords)
-	                                       : OpenGlShape()
+OpenGlShapeWithTexture::OpenGlShapeWithTexture(const vector<glm::vec3> &positions, GLenum mode,
+											   const char *texture_path, const vector<glm::vec2> &texture_coords)
+	: OpenGlShape()
 {
 	number_of_vertices_ = positions.size();
 	drawing_mode_ = mode;
@@ -72,20 +72,20 @@ OpenGlShapeWithTexture::OpenGlShapeWithTexture(const vector<glm::vec3>& position
 	glBindBuffer(GL_ARRAY_BUFFER, VBO_);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 	// texture attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	texture_id_ = load_texture(texture_path);
 }
 
-tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(const vector<float>& vertices);
+tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(const vector<float> &vertices);
 
-OpenGlShapeWithTexture::OpenGlShapeWithTexture(const vector<float>& vertices, GLenum mode,
-                                       const char* texture_path)
+OpenGlShapeWithTexture::OpenGlShapeWithTexture(const vector<float> &vertices, GLenum mode,
+											   const char *texture_path)
 	: OpenGlShapeWithTexture(get<0>(convert_floats_to_vec3_and_vec2(vertices)), mode,
-	                     texture_path, get<1>(convert_floats_to_vec3_and_vec2(vertices)))
+							 texture_path, get<1>(convert_floats_to_vec3_and_vec2(vertices)))
 {
 }
 
@@ -99,7 +99,7 @@ unsigned int OpenGlShapeWithTexture::get_texture_id()
 	return texture_id_;
 }
 
-vector<glm::vec3> convert_floats_to_vec3(const vector<float>& vertices)
+vector<glm::vec3> convert_floats_to_vec3(const vector<float> &vertices)
 {
 	vector<glm::vec3> result;
 	for (int i = 0; i < vertices.size() / 3; ++i)
@@ -111,7 +111,7 @@ vector<glm::vec3> convert_floats_to_vec3(const vector<float>& vertices)
 }
 
 tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(
-	const vector<float>& vertices)
+	const vector<float> &vertices)
 {
 	vector<glm::vec3> positions;
 	vector<glm::vec2> textureCoords;
@@ -135,24 +135,23 @@ tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(
 	return make_tuple(positions, textureCoords);
 }
 
-
-OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<glm::vec3>& vertices, GLenum drawing_mode)
+OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<glm::vec3> &vertices, GLenum drawing_mode)
 	: OpenGlShape()
 {
 	glGenVertexArrays(1, &VAO_);
 	glGenBuffers(1, &VBO_);
 	glBindVertexArray(VAO_);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-	glBufferData(GL_ARRAY_BUFFER, number_of_vertices_ * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(1);
 }
 
-tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(const vector<float>& vertices);
+tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(const vector<float> &vertices);
 
-OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<float>& vertices, GLenum drawing_mode)
+OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<float> &vertices, GLenum drawing_mode)
 	: OpenGlShape(convert_floats_to_vec3(vertices), drawing_mode)
 {
 }
