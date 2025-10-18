@@ -44,3 +44,16 @@ public:
 	~OpenGlShapeWithTexture();
 	unsigned int get_texture_id();
 };
+
+
+export class OpenGlShapeWithColor : public OpenGlShape
+{
+private:
+	unsigned int texture_id_;
+
+public:
+	OpenGlShapeWithColor(const vector<glm::vec3>&, GLenum);
+	OpenGlShapeWithColor(const vector<float>&, GLenum);
+	~OpenGlShapeWithColor();
+	unsigned int get_texture_id();
+};

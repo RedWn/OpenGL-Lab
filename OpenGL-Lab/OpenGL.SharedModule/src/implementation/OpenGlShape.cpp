@@ -134,3 +134,35 @@ tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(
 
 	return make_tuple(positions, textureCoords);
 }
+
+
+OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<glm::vec3>& vertices, GLenum drawing_mode)
+	: OpenGlShape()
+{
+	glGenVertexArrays(1, &VAO_);
+	glGenBuffers(1, &VBO_);
+	glBindVertexArray(VAO_);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_);
+	glBufferData(GL_ARRAY_BUFFER, number_of_vertices_ * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+}
+
+tuple<vector<glm::vec3>, vector<glm::vec2>> convert_floats_to_vec3_and_vec2(const vector<float>& vertices);
+
+OpenGlShapeWithColor::OpenGlShapeWithColor(const vector<float>& vertices, GLenum drawing_mode)
+	: OpenGlShape(convert_floats_to_vec3(vertices), drawing_mode)
+{
+}
+
+OpenGlShapeWithColor::~OpenGlShapeWithColor()
+{
+	glDeleteTextures(1, &texture_id_);
+}
+
+unsigned int OpenGlShapeWithColor::get_texture_id()
+{
+	return texture_id_;
+}

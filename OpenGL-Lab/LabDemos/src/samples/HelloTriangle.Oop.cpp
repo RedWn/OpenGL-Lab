@@ -23,16 +23,15 @@ namespace HelloTriangle_Oop
 	int main()
 	{
 		glfwInit();
-		GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+		GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 		glfwMakeContextCurrent(window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
 		Shader ourShader("./shaders/vs/bypass.vs", "./shaders/fs/red.fs");
-		vector data {
-				glm::vec3(-0.5f, -0.5f, 0.0f),
-				glm::vec3(0.5f, -0.5f, 0.0f),
-				glm::vec3(0.0f, 0.5f, 0.0f)
-		};
+		vector data{
+			glm::vec3(-0.5f, -0.5f, 0.0f),
+			glm::vec3(0.5f, -0.5f, 0.0f),
+			glm::vec3(0.0f, 0.5f, 0.0f)};
 
 		OpenGlShape triangle(data, GL_TRIANGLES);
 		while (!glfwWindowShouldClose(window))
