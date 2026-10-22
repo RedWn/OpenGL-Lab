@@ -1,4 +1,4 @@
-# OpenGL-Lab (2025-2026)[^1]
+# OpenGL-Lab (2026-2027)[^1]
 
 ## Index
 
