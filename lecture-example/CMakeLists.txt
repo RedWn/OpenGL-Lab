@@ -59,6 +59,8 @@ target_link_libraries(OpenGL.SharedModule PUBLIC
 file(GLOB GLPROJECT_SOURCES
     "GLProject/*.cpp"
     "GLProject/*.c"
+    "GLProject/**/*.cpp"
+    "GLProject/**/*.c"
 )
 
 # Pass the detected list and any extra shared source files to add_executable
